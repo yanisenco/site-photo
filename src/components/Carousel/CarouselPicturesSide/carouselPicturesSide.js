@@ -1,9 +1,10 @@
-import monImage from '../../../assets/pictures/IMG_7827.JPG';
+
 
 const CarouselPicturesSide = () => {
     
         return (
-               <img src={monImage}/>
+            <h1>pp</h1>
+            //    <img src={monImage}/>
         );
       }
       

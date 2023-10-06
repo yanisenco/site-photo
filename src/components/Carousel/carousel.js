@@ -1,57 +1,23 @@
 import {useState} from 'react'
-import EXIF from 'exif-js';
 import CarouselActions from "./CarouselActions/CarouselActions";
 import CarouselDescriptionsSide from "./CarouselDescriptionsSide/CarouselDescriptionsSide";
 import CarouselPicturesSide from "./CarouselPicturesSide/carouselPicturesSide";
 import CarouselContent from "./carouselContent";
-import img1 from '../../assets/pictures/IMG_7827.JPG';
+import exifr from 'exifr';
+import img1 from '../../assets/pictures/IMG_7827.jpg';
+import img2 from '../../assets/pictures/IMG_6521.jpg';
+import img3 from '../../assets/pictures/IMG_6622.jpg';
+import img4 from '../../assets/pictures/IMG_6956.jpg';
+import img5 from '../../assets/pictures/IMG_7036.jpg';
+import img6 from '../../assets/pictures/IMG_7218.jpg';
+import img7 from '../../assets/pictures/IMG_7330.jpg';
+import img8 from '../../assets/pictures/IMG_7395.jpg';
+import img9 from '../../assets/pictures/IMG_7426.jpg';
+import img10 from '../../assets/pictures/IMG_8087.jpg';
+
 
 const Carousel = () => {
 
-// // Get references to HTML elements
-// const sliderContainer = document.querySelector(".slider-container");
-// const slidesLeft = document.querySelector(".left-slide");
-// const slidesRight = document.querySelector(".right-slide");
-// const upButton = document.querySelector(".up-button");
-// const downButton = document.querySelector(".down-button");
-
-// // Calculate the total number of slides
-// // const slidesLength = slidesRight.querySelectorAll("div").length;
-// const slidesLength = 3;
-
-// // Initialize the active slide index
-// let activeSlidesIndex = 0;
-
-// // Set initial position for left slides
-// slidesLeft.style.top = `-${(slidesLength - 1) * 100}vh`;
-
-// // Add click event listeners to up and down buttons
-// upButton.addEventListener("click", () => changeSlide("up"));
-// downButton.addEventListener("click", () => changeSlide("down"));
-
-// // Function to change the active slide
-// const changeSlide = (direction) => {
-//   const sliderHeight = sliderContainer.clientHeight;
-//   if (direction === "up") {
-//     activeSlidesIndex++;
-//     if (activeSlidesIndex > slidesLength - 1) {
-//       activeSlidesIndex = 0;
-//     }
-//   } else if (direction === "down") {
-//     activeSlidesIndex--;
-//     if (activeSlidesIndex < 0) {
-//       activeSlidesIndex = slidesLength - 1;
-//     }
-//   }
-
-//   // Update the transform property to change the slide position
-//   slidesRight.style.transform = `translateY(-${
-//     activeSlidesIndex * sliderHeight
-//   }px)`;
-//   slidesLeft.style.transform = `translateY(${
-//     activeSlidesIndex * sliderHeight
-//   }px)`;
-// };
 
 const [pictureIndex, setPictureIndex]= useState(0);
 
@@ -60,42 +26,30 @@ const decrementPictureIndex = () => setPictureIndex(pictureIndex - 1);
 
 
 
-function obtenirInfosDePriseDeVue(imageFile) {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-  
-      fileReader.onload = function () {
-        const image = new Image();
-        image.src = fileReader.result;
-  
-        image.onload = function () {
-          EXIF.getData(image, function () {
-            const exifData = EXIF.getAllTags(this);
-            resolve(exifData);
-          });
-        };
-  
-        image.onerror = function () {
-          reject("Erreur lors du chargement de l'image");
-        };
-      };
-  
-      fileReader.onerror = function () {
-        reject("Erreur lors de la lecture du fichier");
-      };
-  console.log(fileReader.readAsDataURL(imageFile))
-    //   fileReader.readAsDataURL(imageFile);
+const [CarouselContentObj, setCarouselContentObj] = useState([
+    { img : img1, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img2, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img3, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img4, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img5, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img6, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img7, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img8, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img9, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img10, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+]);
+
+const getPicturesData = async(image) => {
+    await exifr.parse(image.img, ['ISO', 'FNumber', 'LensModel', 'ExposureTime', 'Model'])
+    .then((output) => {
+        return output
     });
-  }
-  
-  // Exemple d'utilisation :
-obtenirInfosDePriseDeVue(img1)
-    .then((exifData) => {
-    console.log("Métadonnées EXIF de l'image :", exifData);
-    })
-    .catch((error) => {
-    console.error("Erreur :", error);
-    });
+}
+const obj = CarouselContentObj.map((image)=>{
+    getPicturesData(image);
+});
+
+console.log('obj', obj)
 
     return (
       <div className="slider-container">

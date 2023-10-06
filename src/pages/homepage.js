@@ -1,15 +1,9 @@
-import { Application } from '@splinetool/runtime';
+import {photo} from '../assets/3d/accueil_portfolio_photographie.gltf'
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 
 const Homepage = () => {
 
-const canvas = document.getElementById('canvas3d');
-const spline = new Application(canvas);
-spline
-	.load('https://prod.spline.design/JwCvJv2MI2TFb1Nv/scene.splinecode')
-	.then(() => {
-		spline.setZoom(3);
-	});
 
 // const scene = new THREE.Scene();
 // const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -17,12 +11,20 @@ spline
 // renderer.setSize(window.innerWidth, window.innerHeight);
 // document.body.appendChild(renderer.domElement);
 
-// // Ajoutez un cube à la scène
-// scene.add(app);
 
-// camera.position.z = 5;
+// const loader = new GLTFLoader();
 
-// let canMove = false;
+// let loadedModel;
+
+// loader.load('../assets/3d/accueil_portfolio_photographie.gltf', (gltf) => {
+//   loadedModel = gltf.scene;
+
+//   // Vous pouvez également accéder aux matériaux, à l'animation, etc.
+//   // gltf.animations, gltf.materials, ...
+
+//   scene.add(loadedModel);
+// });
+
 
   return (
    <></>
