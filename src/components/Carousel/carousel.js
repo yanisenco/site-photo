@@ -16,7 +16,7 @@ import img9 from '../../assets/pictures/IMG_7426.jpg';
 import img10 from '../../assets/pictures/IMG_8087.jpg';
 
 
-const Carousel = () => {
+const Carousel = async () => {
 
 
 const [pictureIndex, setPictureIndex]= useState(0);
@@ -40,13 +40,10 @@ const [CarouselContentObj, setCarouselContentObj] = useState([
 ]);
 
 const getPicturesData = async(image) => {
-    await exifr.parse(image.img, ['ISO', 'FNumber', 'LensModel', 'ExposureTime', 'Model'])
-    .then((output) => {
-        return output
-    });
+    return await exifr.parse(image.img, ['ISO', 'FNumber', 'LensModel', 'ExposureTime', 'Model'])
 }
-const obj = CarouselContentObj.map((image)=>{
-    getPicturesData(image);
+const obj = await CarouselContentObj.map(async (image) => {
+    await getPicturesData(image);
 });
 
 console.log('obj', obj)
