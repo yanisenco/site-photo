@@ -1,9 +1,8 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import CarouselActions from "./CarouselActions/CarouselActions";
 import CarouselDescriptionsSide from "./CarouselDescriptionsSide/CarouselDescriptionsSide";
 import CarouselPicturesSide from "./CarouselPicturesSide/carouselPicturesSide";
 import CarouselContent from "./carouselContent";
-import exifr from 'exifr';
 import img1 from '../../assets/pictures/IMG_7827.jpg';
 import img2 from '../../assets/pictures/IMG_6521.jpg';
 import img3 from '../../assets/pictures/IMG_6622.jpg';
@@ -14,9 +13,10 @@ import img7 from '../../assets/pictures/IMG_7330.jpg';
 import img8 from '../../assets/pictures/IMG_7395.jpg';
 import img9 from '../../assets/pictures/IMG_7426.jpg';
 import img10 from '../../assets/pictures/IMG_8087.jpg';
+import { getPicturesData } from '../../services/carousel.service';
 
 
-const Carousel = async () => {
+const Carousel = () => {
 
 
 const [pictureIndex, setPictureIndex]= useState(0);
@@ -39,14 +39,30 @@ const [CarouselContentObj, setCarouselContentObj] = useState([
     { img : img10, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
 ]);
 
-const getPicturesData = async(image) => {
-    return await exifr.parse(image.img, ['ISO', 'FNumber', 'LensModel', 'ExposureTime', 'Model'])
-}
-const obj = await CarouselContentObj.map(async (image) => {
-    await getPicturesData(image);
-});
+useEffect(() => {
+  const fetchPicturesData = async () => {
+    const updatedCarouselContent = await Promise.all(
+      CarouselContentObj.map(async (content) => {
+        const data = await getPicturesData({img: content.img});
+        return {
+          ...content,
+          iso: data.ISO,
+          aperture: data.FNumber,
+          shutterSpeed: data.ExposureTime,
+          lens: data.LensModel,
+          apn: data.Model
+        };
+      })
+    );
+    setCarouselContentObj(updatedCarouselContent);
 
-console.log('obj', obj)
+    console.log(CarouselContentObj)
+  };
+
+  fetchPicturesData();
+
+}, []);
+
 
     return (
       <div className="slider-container">
