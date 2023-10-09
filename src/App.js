@@ -1,3 +1,5 @@
+import React, { Fragment } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import AboutUs from './pages/aboutUs';
 import Contact from './pages/contact';
@@ -6,16 +8,20 @@ import OurWork from './pages/ourWork';
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome in our website</h1>
-      </header>
-      <Homepage/>
-      <OurWork/>
-      <AboutUs/>
-      <Contact/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={
+        <Fragment>
+        <Homepage />
+        <OurWork />
+        <AboutUs />
+        {/* <Contact /> */}
+        </Fragment>
+        } />
+      </Routes>
+    </BrowserRouter>
+
   );
-}
+};
 
 export default App;

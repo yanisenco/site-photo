@@ -1,0 +1,10 @@
+.container{
+    display: flex;
+    align-items: center;
+    margin-bottom : 1vh;
+}
+
+.icon {
+    max-width: 100%;
+    margin-right: 1vh;
+}

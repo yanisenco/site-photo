@@ -1,0 +1,21 @@
+
+.img-shape-right {
+    float: right;
+    width : 70%;
+    shape-outside: url("../../assets/aboutUsPicture/yanis.png");
+    shape-margin: 15px;
+}
+
+.img-shape-left {
+    float: left;
+    width : 35%;
+    shape-outside: url("../../assets/aboutUsPicture/iana.png");
+    shape-margin: 15px;
+}
+
+
+.desc{
+    color: antiquewhite;
+    padding: 150px 5vw 0;
+    font-size: 2vw;
+}
