@@ -1,10 +1,12 @@
+import { Fragment } from "react";
 
 
-const CarouselPicturesSide = () => {
-    
+const CarouselPicturesSide = props => {
+    const {picture}=props
         return (
-            <h1>pp</h1>
-            //    <img src={monImage}/>
+            <Fragment>
+                <img src={picture} alt="Description de l'image" />
+            </Fragment>
         );
       }
       

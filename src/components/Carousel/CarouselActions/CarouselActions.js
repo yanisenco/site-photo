@@ -1,17 +1,13 @@
 const CarouselActions = (props) => {
-    const{
-        incrementPictureIndex,
-         decrementPictureIndex
-        }=props
-        
-    const handleNext = () => incrementPictureIndex(); 
-    const handlePrevious = () => decrementPictureIndex(); 
+    const{changePictureIndex}=props
+
+    const handleOnChange = (increment) => changePictureIndex(increment); 
         return (
           <div className="action-buttons">
-            <button className="up-button" onClick={handleNext}>
+            <button className="up-button" onClick={()=>handleOnChange(1)}>
               <i className="fa-solid fa-arrow-up"></i>
             </button>
-            <button className="down-button"  onClick={handlePrevious}>
+            <button className="down-button"  onClick={()=>handleOnChange(-1)}>
               <i className="fa-solid fa-arrow-down"></i>
             </button> 
           </div>

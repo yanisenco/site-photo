@@ -18,31 +18,39 @@ import { getPicturesData } from '../../services/carousel.service';
 
 const Carousel = () => {
 
-
 const [pictureIndex, setPictureIndex]= useState(0);
 
-const incrementPictureIndex = () => setPictureIndex(pictureIndex + 1);
-const decrementPictureIndex = () => setPictureIndex(pictureIndex - 1);
+const changePictureIndex = (increment) => {
+  setPictureIndex((prevValeur) => {
+    let newValue = prevValeur + increment;
+    console.log(newValue)
+    if (newValue <= 0) {
+      newValue = 9;
+    } else if (newValue >= 10) {
+      newValue = 0;
+    }
+    
+    return newValue;
+  });
+};
 
-
-
-const [CarouselContentObj, setCarouselContentObj] = useState([
-    { img : img1, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img2, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img3, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img4, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img5, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img6, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img7, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img8, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img9, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
-    { img : img10, title: '', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+const [carouselContentObj, setCarouselContentObj] = useState([
+    { img : img1, title: '1', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img2, title: '2', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img3, title: '3', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img4, title: '4', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img5, title: '5', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img6, title: '6', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img7, title: '7', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img8, title: '8', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img9, title: '9', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
+    { img : img10, title: '10', iso : '', aperture : '', shutterSpeed : '', lens : '', apn: ''},
 ]);
 
 useEffect(() => {
   const fetchPicturesData = async () => {
     const updatedCarouselContent = await Promise.all(
-      CarouselContentObj.map(async (content) => {
+      carouselContentObj.map(async (content) => {
         const data = await getPicturesData({img: content.img});
         return {
           ...content,
@@ -55,27 +63,26 @@ useEffect(() => {
       })
     );
     setCarouselContentObj(updatedCarouselContent);
-
-    console.log(CarouselContentObj)
   };
-
   fetchPicturesData();
-
 }, []);
 
 
     return (
       <div className="slider-container">
       <div className="left-slide">
-        <CarouselDescriptionsSide/>
+        <CarouselDescriptionsSide
+        pictureSettings={carouselContentObj[pictureIndex]}
+        />
         </div>
       <div className="right-slide">
-        <CarouselPicturesSide/>
+        <CarouselPicturesSide
+        picture={carouselContentObj[pictureIndex].img}
+        />
         
       </div>
       <CarouselActions
-      incrementPictureIndex={incrementPictureIndex}
-      decrementPictureIndex={decrementPictureIndex}
+      changePictureIndex={changePictureIndex}
       />
     </div>
     );

@@ -1,6 +1,8 @@
 import {photo} from '../assets/3d/accueil_portfolio_photographie.gltf'
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+import modelScene3d from '../assets/3d/accueil_portfolio_photographie.gltf';
+
 
 const Homepage = () => {
 
@@ -16,7 +18,7 @@ const Homepage = () => {
 
 // let loadedModel;
 
-// loader.load('../assets/3d/accueil_portfolio_photographie.gltf', (gltf) => {
+// loader.load(modelScene3d, (gltf) => {
 //   loadedModel = gltf.scene;
 
 //   // Vous pouvez également accéder aux matériaux, à l'animation, etc.
